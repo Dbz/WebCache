@@ -5,8 +5,8 @@
 ul li {
 	list-style: none;
 	border-radius: 15px;
-	min-height: 40px;
-	
+	display: block;
+	padding: 5px;
 }
 #container {
 	width: 500px;
@@ -25,15 +25,10 @@ ul li {
 	background: #91D1D1;
 }
 #selectable .ui-selected {
-	position: relative;
 	background: #8FB3B3;
 	box-shadow: 0px 0px 0px 3px #fff inset;
 }
 #selectable {
 	list-style-type: none;
-	padding: 0;
 	width: 200px;
-}
-#selectable li {
-	height: 18px;
 }
