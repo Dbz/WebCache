@@ -1,0 +1,51 @@
+* {
+	padding: none;
+	margin: none;
+}
+ul li {
+	list-style: none;
+	padding: 20px;
+	border-radius: 15px;
+	
+}
+#container {
+	width: 500px;
+	margin: auto;
+	margin-top: 50px;
+	background: #CCFFFF;
+	border-radius: 15px;
+	padding: 30px;
+}
+#options {
+	width: 200px;
+	margin: auto;
+	position: relative;
+}
+
+#selectable .ui-selecting {
+	background: #91D1D1;
+}
+#selectable .ui-selected {
+	background: #8FB3B3;
+}
+#selectable {
+	list-style-type: none;
+	padding: 0;
+	width: 130px;
+}
+#selectable li {
+	height: 18px;
+}
+
+.clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+ 
+.clearfix {
+	display: inline-block;
+}
