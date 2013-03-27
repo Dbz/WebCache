@@ -5,34 +5,19 @@
 
 <link rel="stylesheet" href="options.css" />
 
-<script src="options.js"></script>
 <script src="jQuery/jquery-1.9.1.js"></script>
 <script src="jQuery/jquery.ui.core.js"></script>
 <script src="jQuery/jquery.ui.widget.js"></script>
 <script src="jQuery/jquery.ui.mouse.js"></script>
 <script src="jQuery/jquery.ui.selectable.js"></script>
-<script src="selectable.js"></script>
 
 
 </head>
 
 <body>
-<!-- <p id="feedback">
-<span>You've selected:</span> <span id="select-result">none</span>.
-</p>
-
-<ol id="selectable">
-	<li class="ui-widget-content">Item 1</li>
-	<li class="ui-widget-content">Item 2</li>
-	<li class="ui-widget-content">Item 3</li>
-	<li class="ui-widget-content">Item 4</li>
-	<li class="ui-widget-content">Item 5</li>
-	<li class="ui-widget-content">Item 6</li>
-</ol>
--->
 <div id="container">
 	<div id="Header">
-		<p>Please select your default cache database:</p>
+		<h3 id="select-result"></h3>
 	</div>
 	<div id="options">
 		<ul id="selectable">
@@ -46,6 +31,7 @@
 		</ul>
 	</div>
 </div>
+<script src="selectable.js"></script>
 </body>
 
 </html>

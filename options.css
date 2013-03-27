@@ -20,6 +20,9 @@ ul li {
 	width: 200px;
 	margin: auto;
 }
+#status {
+	position: absolute;
+}
 
 #selectable .ui-selecting {
 	background: #91D1D1;
@@ -28,7 +31,9 @@ ul li {
 	background: #8FB3B3;
 	box-shadow: 0px 0px 0px 3px #fff inset;
 }
+#selectable .ui-selected img {
+	box-shadow: none;
+}
 #selectable {
 	list-style-type: none;
-	width: 200px;
 }

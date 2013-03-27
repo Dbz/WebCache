@@ -1,7 +1,7 @@
 
 // Saves options to localStorage.
 function save_options() {
-  var select = document.getElementById("cache");
+  var select = $(".ui-selected");
   var cache = select.children[select.selectedIndex].value;
   localStorage["chosen_cache"] = cache;
 
