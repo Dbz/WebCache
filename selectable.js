@@ -1,13 +1,13 @@
-var caches = new Array("Google Cache", "Bing Cache","Yahoo Cache","Wayback Machine", "Coral CDN", "Gigablast", "WebCite");
+var caches = new Array("Google Cache", "Wayback Machine", "Coral CDN", "Bing Cache","Yahoo Cache", "Gigablast", "WebCite");
 // Selection function and saves the selection
 $(function() {
 	$( "#selectable" ).selectable({
 		stop: function() {
-			var result = $( "#select-result" ).empty();
+			//var result = $( "#select-result" ).empty();
 			var index;
 			$( ".ui-selected", this ).each(function() {
 				index = $( "#selectable li" ).index( this );
-				result.append( "Your default cache database is: " + caches[index] );
+				//result.append( "Your default cache database is: " + caches[index] );
 			});
 			// Now save to local storage
 			localStorage["chosen_cache"] = index;
@@ -32,7 +32,7 @@ $(function() {
 	if(!~index)
 		localStorage["chose_cache"] = 0;
 	$("#selectable li").eq(index).addClass("ui-selected");
-	var result = $( "#select-result" ).empty();
-	result.append( "Your default cache database is: " + caches[index] );
+	//var result = $( "#select-result" ).empty();
+	//result.append( "Your default cache database is: " + caches[index] );
 });
 
