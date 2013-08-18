@@ -1,7 +1,7 @@
 var index = "0";
 function openPage() {
 	index = localStorage["chosen_cache"];
-	//console.log("Index is: " + index);
+	console.log("Index is: " + index);
 	switch(index) {
 		case "0": // Google
 			chrome.tabs.getSelected(null, function(tab) {
@@ -25,8 +25,10 @@ function openPage() {
 			break;
 		case "2": // Coral CDN
 			chrome.tabs.getSelected(null, function(tab) {
-				if(tab.url.slice(-9)) == ".nyud.net") // Return if already viewing cached webpage
+				if(tab.url.slice(-9) == ".nyud.net") // Return if already viewing cached webpage
 					return;
+				else if(tab.url.slice(-1) == "/")
+					chrome.tabs.update(tab.id, { url: tab.url.substring(0, tab.url.length -1) + '.nyud.net' });
   				else
   					chrome.tabs.update(tab.id, { url: tab.url + '.nyud.net' });
 			});
