@@ -41,9 +41,16 @@ function openPage() {
 			break;
 		case "6": // Webcite
 			break;
-		default:
-			console.log("default case, index is: " + index);
-	}	
+		default: // Google
+			chrome.tabs.getSelected(null, function(tab) {
+				if(tab.url.substring(7, 15) == "webcache") // Return if already viewing cached webpage
+					return;
+  				else if(tab.url.substring(0, 5) == "http:")
+					chrome.tabs.update(tab.id, { url: 'http://webcache.googleusercontent.com/search?q=cache:' + tab.url.substr(7) });
+				else if(tab.url.substring(0,6) == "https:")
+					chrome.tabs.update(tab.id, { url: 'http://webcache.googleusercontent.com/search?q=cache:' + tab.url.substr(8) });
+			});
+	}
 }
 
 chrome.browserAction.onClicked.addListener(openPage);
