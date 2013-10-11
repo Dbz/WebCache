@@ -1,4 +1,4 @@
-WebCache - Currently being updated [working]
+WebCache
 ========
 
 This is a chrome browser extension that allows the user to view a cached version of the current webpage
@@ -6,3 +6,5 @@ This is a chrome browser extension that allows the user to view a cached version
 Install this extension here: https://chrome.google.com/webstore/detail/webcache/cmmlgikpahieigpcclckfmhnchdlfnjd
 
 Images by Jason Rainbows
+
+v2.0.1
