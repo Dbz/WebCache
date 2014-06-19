@@ -2,7 +2,7 @@
 	"manifest_version": 2,
 
 	"name": "WebCache",
-  	"version": "2.0.1",
+  	"version": "3.0.0",
 	"description": "View a cached version of a web page",
 
 	"browser_action": {
@@ -21,6 +21,7 @@
 	"options_page": "options.html",
 
 	"permissions": [
-    	"tabs", "http://*/*", "https://*/*"
+    	"tabs", "http://*/*", "https://*/*",
+    	"webRequest", "webRequestBlocking"
     ]
 }

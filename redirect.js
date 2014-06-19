@@ -1,56 +1,75 @@
 var index = "0";
-function openPage() {
-	index = localStorage["chosen_cache"];
-	console.log("Index is: " + index);
-	switch(index) {
-		case "0": // Google
-			chrome.tabs.getSelected(null, function(tab) {
-				if(tab.url.substring(7, 15) == "webcache") // Return if already viewing cached webpage
-					return;
-  				else if(tab.url.substring(0, 5) == "http:")
-					chrome.tabs.update(tab.id, { url: 'http://webcache.googleusercontent.com/search?q=cache:' + tab.url.substr(7) });
-				else if(tab.url.substring(0,6) == "https:")
-					chrome.tabs.update(tab.id, { url: 'http://webcache.googleusercontent.com/search?q=cache:' + tab.url.substr(8) });
-			});
-			break;
-		case "1": // Wayback Machine
-			chrome.tabs.getSelected(null, function(tab) {
-				if(tab.url.substring(7, 18) == "web.archive") // Return if already viewing cached webpage
-					return;
-  				else if(tab.url.substring(0, 5) == "http:")
-					chrome.tabs.update(tab.id, { url: 'http://web.archive.org/web/*/' + tab.url.substr(7) });
-				else if(tab.url.substring(0,6) == "https:")
-					chrome.tabs.update(tab.id, { url: 'http://web.archive.org/web/*/' + tab.url.substr(8) });
-			});
-			break;
-		case "2": // Coral CDN
-			chrome.tabs.getSelected(null, function(tab) {
-				if(tab.url.slice(-9) == ".nyud.net") // Return if already viewing cached webpage
-					return;
-				else if(tab.url.slice(-1) == "/")
-					chrome.tabs.update(tab.id, { url: tab.url.substring(0, tab.url.length -1) + '.nyud.net' });
-  				else
-  					chrome.tabs.update(tab.id, { url: tab.url + '.nyud.net' });
-			});
-			break;
-		case "3": // Bing
-			break;
-		case "4": // Yahoo
-			break;
-		case "5": // Gigablast
-			break;
-		case "6": // Webcite
-			break;
-		default: // Google
-			chrome.tabs.getSelected(null, function(tab) {
-				if(tab.url.substring(7, 15) == "webcache") // Return if already viewing cached webpage
-					return;
-  				else if(tab.url.substring(0, 5) == "http:")
-					chrome.tabs.update(tab.id, { url: 'http://webcache.googleusercontent.com/search?q=cache:' + tab.url.substr(7) });
-				else if(tab.url.substring(0,6) == "https:")
-					chrome.tabs.update(tab.id, { url: 'http://webcache.googleusercontent.com/search?q=cache:' + tab.url.substr(8) });
-			});
+var currentURL = "";
+var isHTTPS = true;
+var numberOfRedirects = 0;
+
+var URLS = [
+	"http://webcache.googleusercontent.com/search?q=cache:",
+	"http://web.archive.org/web/*/",
+	".nyud.net"
+];
+
+function getURL() {
+	++numberOfRedirects;
+	if(URLS[index]  == URLS.length)
+		index = 0
+	if(URLS[index] != ".nyud.net") { // Google and Wayback Machine
+		if(isHTTPS)
+			return URLS[index] + currentURL.substr(8);
+		else
+			return URLS[index] + currentURL.substr(7);
 	}
+	else { // Coral CDN
+		if(currentURL.slice(-1) == "/")
+			return currentURL.substring(0, currentURL.length -1) + '.nyud.net';
+		else
+			return currentURL + '.nyud.net';
+	}
+}
+
+function handler(details) { 
+	//console.log("StatusLine is: " + details.statusLine);
+	if(numberOfRedirects > URLS.length) { // There is no cache available
+		chrome.webRequest.onHeadersReceived.removeListener(handler);
+		return{cancel: true};
+	}
+	if(~details.statusLine.search("404")) { // Not found
+		++index;
+		return{redirectUrl:getURL()};
+	}
+	else if(~details.statusLine.search("403")) { // Forbidden
+		++index;
+		return{redirectUrl:getURL()};
+	}
+	else { // Success
+		chrome.webRequest.onHeadersReceived.removeListener(handler);
+		return{cancel: false};
+	}
+}
+
+function openPage() {
+	numberOfRedirects = 0;
+	index = parseInt(localStorage["chosen_cache"]);
+	chrome.tabs.getSelected(null, function(tab) {
+		currentURL = tab.url;
+		if(currentURL.substring(0, 5) == "http:")
+			isHTTPS = false;
+		else
+			isHTTPS = true;
+	});
+	chrome.webRequest.onHeadersReceived.addListener(
+		handler,
+		{
+			urls: ["<all_urls>"],
+			types: ["main_frame"]
+		},
+		["blocking"]
+	);
+	
+	chrome.tabs.getSelected(null, function(tab) {
+		chrome.tabs.update(tab.id, { url: getURL(index) });
+	});
+	
 }
 
 chrome.browserAction.onClicked.addListener(openPage);

@@ -1,4 +1,4 @@
-var caches = new Array("Google Cache", "Wayback Machine", "Coral CDN", "Bing Cache","Yahoo Cache", "Gigablast", "WebCite");
+var caches = new Array("Google Cache", "Wayback Machine", "Coral CDN"); //, "Bing Cache","Yahoo Cache", "Gigablast", "WebCite");
 // Selection function and saves the selection
 $(function() {
 	$( "#selectable" ).selectable({
