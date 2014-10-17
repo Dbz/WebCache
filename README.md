@@ -7,4 +7,4 @@ Install this extension here: https://chrome.google.com/webstore/detail/webcache/
 
 Images by Jason Rainbows
 
-v3.0.0
+v3.1.0
