@@ -1,6 +1,7 @@
 
 // Saves options to localStorage.
 function save_options() {
+/*
   var select = $(".ui-selected");
   var cache = select.children[select.selectedIndex].value;
   localStorage["chosen_cache"] = cache;
@@ -11,6 +12,9 @@ function save_options() {
   setTimeout(function() {
     status.innerHTML = "";
   }, 750);
+*/
+	var radio = $(".radio-inline")
+	
 }
 
 // Restores select box state to saved value from localStorage.

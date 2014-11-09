@@ -1,6 +1,7 @@
 var CACHES = ["WayBack Machine", "Coral CDN", "Google Cache"];
 var HTML = ["Google Cache", "WayBack Machine", "Coral CDN"];
 var order = [];
+var autoDetect = false;
 
 //order = CACHES;
 
@@ -16,7 +17,7 @@ $("#sortable").sortable({
         	console.log("Saved Settings: " + order.split(":"));
         });
     },
-    create: function(event, ui) {
+    create: function(event, ui) { // Set up sortable and also radio buttons
         chrome.storage.sync.get('caches', function(result) {
         	order = result.caches.split(":");
         	if (order.length != 3) {
@@ -33,7 +34,26 @@ $("#sortable").sortable({
 		    });
 		    ul.append(li);
         });
+        // Set up radio buttons
+        chrome.storage.sync.get('auto-detect', function(result) {
+        	if(result['auto-detect'] == 'on') {
+        		$('#on').prop('checked', true);
+        		autoDectect = true;
+        	} else if(result['auto-detect'] == 'off') {
+        		$('#off').prop('checked', true);
+        		autoDetect = false;
+        	}
+        });
     }
+});
+
+$(":radio").click(function(button) {
+	chrome.storage.sync.set({'auto-detect':button.target.id});
+	if(button.target.id == 'on') {
+		autoDetect = true;
+	} else {
+		autoDetect = false;
+	}
 });
 
 $("#sortable").disableSelection();
