@@ -2,6 +2,7 @@
 	"manifest_version": 2,
 
 	"name": "WebCache",
+	"short name" : "WebCache",
   	"version": "3.2.0",
 	"description": "View a cached version of a web page",
 
