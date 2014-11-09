@@ -2,6 +2,10 @@
 <head>
   <meta charset="utf-8">
 	<title>WebCache Options</title>
+	
+	<!-- bootstrap css + javascript -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 
 <link rel="stylesheet" href="options.css" />
 
@@ -11,24 +15,27 @@
 </head>
 
 <body>
-<div id="container">
-	<div id="header">
-		<h3 id="select-result">List your preferable cache databases by dragging</h3>
+<div class="panel panel-default row panel-info">
+	<div class="panel-heading">
+		<h3 class="panel-title">List your preferable cache databases by dragging</h3>
 	</div>
-	<div id="content">
+	<div class="panel-body col-md-5 col-md-offset-1">
 		<div id="options">
-			<ul id="sortable">
-				<li id="Google Cache"><a><img src="images/CacheMenuGoogleCache2.png", class="button" height ="34px" /></a></li>
-				<li id="WayBack Machine"><a><img src="images/CacheMenuWaybackMachine2.png",class="button" height ="34px" /></a></li>
-				<li id="Coral CDN"><a><img src="images/CacheMenuCoralCDN2.png", class="button" height ="34px" /></a></li>
+			<ul class="list-group" id="sortable">
+				<li class="list-group-item" id="Google Cache"><a><img src="images/CacheMenuGoogleCache2.png", class="button" /></a></li>
+				<li class="list-group-item" id="WayBack Machine"><a><img src="images/CacheMenuWaybackMachine2.png",class="button" /></a></li>
+				<li class="list-group-item" id="Coral CDN"><a><img src="images/CacheMenuCoralCDN2.png", class="button" /></a></li>
 			</ul>
 		</div>
-		<div id="auto">
-			<h4>Automatically use Webcache</h4>
-			<div id="radio">
-				<input type="radio" id="on"><label for="on">On</label>
-				<input type="radio" id="off"><label for="off">Off</label>
-			</div>
+	</div>
+	<div class="panel-body col-md-5 col-md-offset-1">
+		<h4 class="panel-title">Detect down webpage</h4>
+		<br>
+		<div class="container">
+			<label class="radio-inline" for="on">On</label>
+			<input type="radio" id="on" name="optradio">
+			<label class="radio-inline" for="off">Off</label>
+			<input type="radio" id="off" name="optradio">
 		</div>
 	</div>
 </div>

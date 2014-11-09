@@ -6,29 +6,28 @@
 	-webkit-user-select: none;
 	user-select: none;
 }
-.panel {
-	margin-left: auto;
-	margin-right: auto;
-	width: 500px;
-	position: relative;
-	top: 100px;
-}
-.panel-body {
-	width: 200px;
-}
-.list-group-item {
-	width: 200px;
-}
-.list-group-item img {
-	position: relative;
-	top: -20px;
-	left: -20px;
-}
-h4 {
+h4, h3 {
 	border-bottom: 2px solid black;
 	padding-bottom: 5px;
 }
-
+ul li {
+	list-style: none;
+	border-radius: 10px;
+	border: 2px solid;
+	width: 100%;
+	display: block;
+	padding: 5px;
+}
+#container {
+	height: 350px;
+	width: 500px;
+	margin: auto;
+	margin-top: 50px;
+	background: #d7e2ea;
+	border: 1px solid;
+	border-radius: 5px;
+	padding: 30px;
+}
 #options {
 	display: inline;
 	float: left;
