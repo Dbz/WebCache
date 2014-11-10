@@ -7,10 +7,7 @@ Install this extension here: https://chrome.google.com/webstore/detail/webcache/
 
 Images by Jason Rainbows
 
-<<<<<<< HEAD
-v3.0.0
 
-Note: Chrome Store Version is not up to date. I will update it after I update the options page.
-=======
 v3.2.0
->>>>>>> options-page
+
+Note: Chrome Store Version is not up to date. I will update it I implement auto-redirect functionality
