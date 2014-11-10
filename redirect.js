@@ -2,6 +2,7 @@ var currentURL = "";
 var isHTTPS = true;
 var index = 0;
 var numberOfRedirects = 0;
+var redirecting = false;
 
 var cacheURL = [
 	"http://webcache.googleusercontent.com/search?q=cache:",
@@ -38,6 +39,7 @@ function handler(details) {
 	//console.log("StatusLine is: " + details.statusLine);
 	if(numberOfRedirects > cacheURL.length) { // There is no cache available
 		chrome.webRequest.onHeadersReceived.removeListener(handler);
+		redirecting = false;
 		return{cancel: true};
 	}
 	if(~details.statusLine.search("404")) { // Not found
@@ -50,12 +52,13 @@ function handler(details) {
 	}
 	else { // Success
 		chrome.webRequest.onHeadersReceived.removeListener(handler);
+		redirecting = false;
 		return{cancel: false};
 	}
 }
 
 function openPage() {
-
+	redirecting = true;
 	chrome.storage.sync.get('caches', function(result) {
         var cacheOrder = result.caches.split(":");
         
@@ -91,5 +94,29 @@ function openPage() {
         
 	});
 }
+
+function autoRedirect(details) {
+	if(redirecting) {
+		return;
+	}
+	console.log("details ", details.statusLine);
+	if(~details.statusLine.indexOf("408")) {
+		console.log("408 redirect");
+	} else if(~details.statusLine.indexOf("503")) {
+		console.log("503 redirect");
+		openPage();
+	}
+}
+
+chrome.storage.sync.get('auto-detect', function(result) {
+	if(result['auto-detect'] == 'on') {
+		chrome.webRequest.onHeadersReceived.addListener(
+			autoRedirect,
+			{
+				urls: ["<all_urls>"]
+			}
+		);
+	}
+});
 
 chrome.browserAction.onClicked.addListener(openPage);
