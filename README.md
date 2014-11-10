@@ -10,4 +10,4 @@ Images by Jason Rainbows
 
 v3.2.0
 
-Note: Chrome Store Version is not up to date. I will update it I implement auto-redirect functionality
+Note: Chrome Store Version is not up to date. I will update it after I implement auto-redirect functionality

@@ -99,11 +99,17 @@ function autoRedirect(details) {
 	if(redirecting) {
 		return;
 	}
-	console.log("details ", details.statusLine);
+	console.log("details ", details);
 	if(~details.statusLine.indexOf("408")) {
 		console.log("408 redirect");
 	} else if(~details.statusLine.indexOf("503")) {
 		console.log("503 redirect");
+		openPage();
+	} else if(~details.statusLine.indexOf("521")) {
+		console.log("521 redirect");
+		openPage();
+	} else if(~details.statusLine.indexOf("522")) {
+		console.log("522 redirect");
 		openPage();
 	}
 }
