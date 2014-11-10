@@ -8,6 +8,4 @@ Install this extension here: https://chrome.google.com/webstore/detail/webcache/
 Images by Jason Rainbows
 
 
-v3.2.0
-
-Note: Chrome Store Version is not up to date. I will update it after I implement auto-redirect functionality
+v3.3.0

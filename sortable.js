@@ -1,7 +1,6 @@
 var CACHES = ["WayBack Machine", "Coral CDN", "Google Cache"];
 var HTML = ["Google Cache", "WayBack Machine", "Coral CDN"];
 var order = [];
-var autoDetect = false;
 
 //order = CACHES;
 
@@ -38,10 +37,8 @@ $("#sortable").sortable({
         chrome.storage.sync.get('auto-detect', function(result) {
         	if(result['auto-detect'] == 'on') {
         		$('#on').prop('checked', true);
-        		autoDectect = true;
         	} else if(result['auto-detect'] == 'off') {
         		$('#off').prop('checked', true);
-        		autoDetect = false;
         	}
         });
     }
@@ -49,11 +46,6 @@ $("#sortable").sortable({
 
 $(":radio").click(function(button) {
 	chrome.storage.sync.set({'auto-detect':button.target.id});
-	if(button.target.id == 'on') {
-		autoDetect = true;
-	} else {
-		autoDetect = false;
-	}
 });
 
 $("#sortable").disableSelection();
