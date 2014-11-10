@@ -1,23 +1,31 @@
-var index = "0";
 var currentURL = "";
 var isHTTPS = true;
+var index = 0;
 var numberOfRedirects = 0;
+var redirecting = false;
 
-var URLS = [
+var cacheURL = [
 	"http://webcache.googleusercontent.com/search?q=cache:",
 	"http://web.archive.org/web/*/",
 	".nyud.net"
 ];
+var cacheNames = ["Google Cache", "WayBack Machine", "Coral CDN"];
+
+var URL_HASH = [
+	{name: "Google Cache", URL: "http://webcache.googleusercontent.com/search?q=cache:"},
+	{name: "WayBack Machine", URL: "http://web.archive.org/web/*/"},
+	{name: "Coral CDN", URL: ".nyud.net"}
+];
 
 function getURL() {
 	++numberOfRedirects;
-	if(URLS[index]  == URLS.length)
+	if(cacheURL[index]  == cacheURL.length)
 		index = 0
-	if(URLS[index] != ".nyud.net") { // Google and Wayback Machine
+	if(cacheURL[index] != ".nyud.net") { // Google and Wayback Machine
 		if(isHTTPS)
-			return URLS[index] + currentURL.substr(8);
+			return cacheURL[index] + currentURL.substr(8);
 		else
-			return URLS[index] + currentURL.substr(7);
+			return cacheURL[index] + currentURL.substr(7);
 	}
 	else { // Coral CDN
 		if(currentURL.slice(-1) == "/")
@@ -29,8 +37,9 @@ function getURL() {
 
 function handler(details) { 
 	//console.log("StatusLine is: " + details.statusLine);
-	if(numberOfRedirects > URLS.length) { // There is no cache available
+	if(numberOfRedirects > cacheURL.length) { // There is no cache available
 		chrome.webRequest.onHeadersReceived.removeListener(handler);
+		redirecting = false;
 		return{cancel: true};
 	}
 	if(~details.statusLine.search("404")) { // Not found
@@ -43,33 +52,71 @@ function handler(details) {
 	}
 	else { // Success
 		chrome.webRequest.onHeadersReceived.removeListener(handler);
+		redirecting = false;
 		return{cancel: false};
 	}
 }
 
 function openPage() {
-	numberOfRedirects = 0;
-	index = parseInt(localStorage["chosen_cache"]);
-	chrome.tabs.getSelected(null, function(tab) {
-		currentURL = tab.url;
-		if(currentURL.substring(0, 5) == "http:")
-			isHTTPS = false;
-		else
-			isHTTPS = true;
+	redirecting = true;
+	chrome.storage.sync.get('caches', function(result) {
+        var cacheOrder = result.caches.split(":");
+        
+        URL_HASH.sort(function(a, b) {
+        	return cacheOrder.indexOf(a.name) - cacheOrder.indexOf(b.name);
+        });
+        
+        for (var i = 0; i< 3; i++) {
+        	cacheURL[i] = URL_HASH[i].URL;
+        	cacheNames[i] = URL_HASH[i].name;
+        }
+        
+        index = 0
+        numberOfRedirects = 0;
+				
+		chrome.webRequest.onHeadersReceived.addListener(
+			handler,
+			{
+				urls: ["<all_urls>"],
+				types: ["main_frame"]
+			},
+			["blocking"]
+		);
+
+		chrome.tabs.getSelected(null, function(tab) {
+			currentURL = tab.url;
+			if(currentURL.substring(0, 5) == "http:")
+				isHTTPS = false;
+			else
+				isHTTPS = true;
+			chrome.tabs.update(tab.id, { url: getURL(index) });
+		});
+        
 	});
-	chrome.webRequest.onHeadersReceived.addListener(
-		handler,
-		{
-			urls: ["<all_urls>"],
-			types: ["main_frame"]
-		},
-		["blocking"]
-	);
-	
-	chrome.tabs.getSelected(null, function(tab) {
-		chrome.tabs.update(tab.id, { url: getURL(index) });
-	});
-	
 }
+
+function autoRedirect(details) {
+	if(redirecting) {
+		return;
+	}
+	console.log("details ", details.statusLine);
+	if(~details.statusLine.indexOf("408")) {
+		console.log("408 redirect");
+	} else if(~details.statusLine.indexOf("503")) {
+		console.log("503 redirect");
+		openPage();
+	}
+}
+
+chrome.storage.sync.get('auto-detect', function(result) {
+	if(result['auto-detect'] == 'on') {
+		chrome.webRequest.onHeadersReceived.addListener(
+			autoRedirect,
+			{
+				urls: ["<all_urls>"]
+			}
+		);
+	}
+});
 
 chrome.browserAction.onClicked.addListener(openPage);
