@@ -8,4 +8,4 @@ Install this extension here: https://chrome.google.com/webstore/detail/webcache/
 Images by Jason Rainbows
 
 
-v3.3.0
+v3.4.0
