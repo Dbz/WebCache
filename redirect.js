@@ -57,8 +57,7 @@ function handler(details) {
 	}
 }
 
-function openPage() {
-	redirecting = true;
+function openPage(currentTab) {
 	chrome.storage.sync.get('caches', function(result) {
         var cacheOrder = result.caches.split(":");
         
@@ -73,6 +72,7 @@ function openPage() {
         
         index = 0
         numberOfRedirects = 0;
+        redirecting = true;
 				
 		chrome.webRequest.onHeadersReceived.addListener(
 			handler,
@@ -93,6 +93,7 @@ function openPage() {
 			chrome.tabs.update(tab.id, { url: getURL(index) });
 		});
 		*/
+		/*
 		chrome.tabs.query( { active: true, currentWindow: true } , function(tab) {
 			tab = tab[0];
 			currentURL = tab.url;
@@ -100,29 +101,49 @@ function openPage() {
 				isHTTPS = false;
 			else
 				isHTTPS = true;
-			chrome.tabs.update(tab.id, { url: getURL(index) });
+			
+			console.log("the tab id for the redirect is" + currentTab.id + " or " + tab.id);
+			
+			if(currentTab.id)
+				chrome.tabs.update(currentTab.id, { url: getURL(index) });
+			else
+				chrome.tabs.update(tab.id, { url: getURL(index) });
 		});
+		*/
+		
+		currentURL = currentTab.url;
+		if(currentURL.substring(0, 5) == "http:")
+			isHTTPS = false;
+		else
+			isHTTPS = true;
+			
+		console.log("the tab id for the redirect is " + currentTab.id + ": The website is: " + currentURL);
+			
+		chrome.tabs.update(currentTab.id, { url: getURL(index) });
         
 	});
 }
 
 function autoRedirect(details) {
-	if(redirecting) {
-		return;
-	}
-	//console.log("details ", details);
-	if(~details.statusLine.indexOf("408")) {
-		console.log("408 redirect");
-	} else if(~details.statusLine.indexOf("503")) {
-		console.log("503 redirect");
-		openPage();
-	} else if(~details.statusLine.indexOf("521")) {
-		console.log("521 redirect");
-		openPage();
-	} else if(~details.statusLine.indexOf("522")) {
-		console.log("522 redirect");
-		openPage();
-	}
+	chrome.tabs.query( {active: true, currentWindow: true }, function(tab) {
+		tab = tab[0];
+		if(redirecting) {
+			return;
+		}
+		//console.log("details ", details);
+		if(~details.statusLine.indexOf("408")) {
+			console.log("408 redirect");
+		} else if(~details.statusLine.indexOf("503")) {
+			console.log("503 redirect");
+			openPage(tab);
+		} else if(~details.statusLine.indexOf("521")) {
+			console.log("521 redirect");
+			openPage(tab);
+		} else if(~details.statusLine.indexOf("522")) {
+			console.log("522 redirect");
+			openPage(tab);
+		}
+	});
 }
 
 chrome.storage.sync.get('auto-detect', function(result) {
