@@ -83,7 +83,18 @@ function openPage() {
 			["blocking"]
 		);
 
+		/*
 		chrome.tabs.getSelected(null, function(tab) {
+			currentURL = tab.url;
+			if(currentURL.substring(0, 5) == "http:")
+				isHTTPS = false;
+			else
+				isHTTPS = true;
+			chrome.tabs.update(tab.id, { url: getURL(index) });
+		});
+		*/
+		chrome.tabs.query( { active: true, currentWindow: true } , function(tab) {
+			tab = tab[0];
 			currentURL = tab.url;
 			if(currentURL.substring(0, 5) == "http:")
 				isHTTPS = false;
@@ -99,7 +110,7 @@ function autoRedirect(details) {
 	if(redirecting) {
 		return;
 	}
-	console.log("details ", details);
+	//console.log("details ", details);
 	if(~details.statusLine.indexOf("408")) {
 		console.log("408 redirect");
 	} else if(~details.statusLine.indexOf("503")) {
