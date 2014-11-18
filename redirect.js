@@ -82,42 +82,12 @@ function openPage(currentTab) {
 			},
 			["blocking"]
 		);
-
-		/*
-		chrome.tabs.getSelected(null, function(tab) {
-			currentURL = tab.url;
-			if(currentURL.substring(0, 5) == "http:")
-				isHTTPS = false;
-			else
-				isHTTPS = true;
-			chrome.tabs.update(tab.id, { url: getURL(index) });
-		});
-		*/
-		/*
-		chrome.tabs.query( { active: true, currentWindow: true } , function(tab) {
-			tab = tab[0];
-			currentURL = tab.url;
-			if(currentURL.substring(0, 5) == "http:")
-				isHTTPS = false;
-			else
-				isHTTPS = true;
-			
-			console.log("the tab id for the redirect is" + currentTab.id + " or " + tab.id);
-			
-			if(currentTab.id)
-				chrome.tabs.update(currentTab.id, { url: getURL(index) });
-			else
-				chrome.tabs.update(tab.id, { url: getURL(index) });
-		});
-		*/
 		
 		currentURL = currentTab.url;
-		if(currentURL.substring(0, 5) == "http:")
-			isHTTPS = false;
-		else
-			isHTTPS = true;
-			
-		console.log("the tab id for the redirect is " + currentTab.id + ": The website is: " + currentURL);
+
+		currentURL.substring(0, 5) == "http:" ? isHTTPS = false : isHTTPS = true;
+
+		//console.log("the tab id for the redirect is " + currentTab.id + ": The website is: " + currentURL);
 			
 		chrome.tabs.update(currentTab.id, { url: getURL(index) });
         
@@ -125,12 +95,17 @@ function openPage(currentTab) {
 }
 
 function autoRedirect(details) {
-	chrome.tabs.query( {active: true, currentWindow: true }, function(tab) {
-		tab = tab[0];
-		if(redirecting) {
+	chrome.tabs.query( {}, function(tabs) {
+		// Make sure it is the current tab
+		var tab = null;
+		tabs.forEach(function(t) {
+			if(t.url == details.url) // What if multiple tabs open with same url?
+				tab = t;
+		});
+		// Return if no tab with url or redirecting
+		if(tab == null || redirecting)
 			return;
-		}
-		//console.log("details ", details);
+		
 		if(~details.statusLine.indexOf("408")) {
 			console.log("408 redirect");
 		} else if(~details.statusLine.indexOf("503")) {
