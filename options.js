@@ -37,7 +37,7 @@ $("#sortable").sortable({
         chrome.storage.sync.get('auto-detect', function(result) {
         	if(result['auto-detect'] == 'on') {
         		$('#on').prop('checked', true);
-        	} else if(result['auto-detect'] == 'off') {
+        	} else {
         		$('#off').prop('checked', true);
         	}
         });
@@ -45,7 +45,7 @@ $("#sortable").sortable({
 });
 
 $(":radio").click(function(button) {
-	chrome.storage.sync.set({'auto-detect':button.target.id});
+	chrome.storage.sync.set({'auto-detect':button.target.id}, function() { console.log("Saved Auto-Detect Preferences"); });
 });
 
 $("#sortable").disableSelection();

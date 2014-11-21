@@ -59,7 +59,13 @@ function handler(details) {
 
 function openPage(currentTab) {
 	chrome.storage.sync.get('caches', function(result) {
-        var cacheOrder = result.caches.split(":");
+		console.log(result);
+		var cacheOrder;
+		if(result)
+	        cacheOrder = result.caches.split(":");
+	    else
+	        cacheOrder = cacheNames;
+	        
         
         URL_HASH.sort(function(a, b) {
         	return cacheOrder.indexOf(a.name) - cacheOrder.indexOf(b.name);
