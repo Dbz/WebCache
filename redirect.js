@@ -59,13 +59,7 @@ function handler(details) {
 
 function openPage(currentTab) {
 	chrome.storage.sync.get('caches', function(result) {
-		console.log(result);
-		var cacheOrder;
-		if(result)
-	        cacheOrder = result.caches.split(":");
-	    else
-	        cacheOrder = cacheNames;
-	        
+		var cacheOrder = result.caches.split(":");
         
         URL_HASH.sort(function(a, b) {
         	return cacheOrder.indexOf(a.name) - cacheOrder.indexOf(b.name);
@@ -75,6 +69,8 @@ function openPage(currentTab) {
         	cacheURL[i] = URL_HASH[i].URL;
         	cacheNames[i] = URL_HASH[i].name;
         }
+        
+        console.log(cacheURL);
         
         index = 0
         numberOfRedirects = 0;
@@ -139,3 +135,8 @@ chrome.storage.sync.get('auto-detect', function(result) {
 });
 
 chrome.browserAction.onClicked.addListener(openPage);
+
+chrome.runtime.onInstalled.addListener(function(details) {
+	if(details.reason == "install")
+		chrome.storage.set({'caches':cacheNames.join(":"), 'auto-detect':'off'}, function() { console.log("first install"); });
+});
