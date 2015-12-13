@@ -12,20 +12,14 @@ $("#sortable").sortable({
         order.splice(order.indexOf(ui.item.attr('id')), 1);
         order.splice(ui.item.index(), 0, ui.item.attr('id'));
 
-        chrome.storage.sync.set({'caches': order.join(":")}, function() {
+        chrome.storage.sync.set({'cacheOrder': order}, function() {
         	console.log("Saved Settings: " + order.split(":"));
         });
     },
     create: function(event, ui) { // Set up sortable and also radio buttons
-        chrome.storage.sync.get('caches', function(result) {
-        	order = result.caches.split(":");
-        	if (order.length != 3) {
-	        	order = CACHES;
-        		chrome.storage.sync.set({'caches': CACHES.join(":")}, function() {
-	        		console.log("Saving settings for the first time: " + CACHES.split(":"));
-	    	    });
-	        }
-	        
+        chrome.storage.sync.get('cacheOrder', function(result) {
+        	order = result.cacheOrder;
+
 	        var ul = $('#sortable');
 	        var li = ul.children('li').get();
     	    li.sort(function(a,b) {
@@ -45,7 +39,7 @@ $("#sortable").sortable({
 });
 
 $(":radio").click(function(button) {
-	chrome.storage.sync.set({'auto-detect':button.target.id}, function() { console.log("Saved Auto-Detect Preferences"); });
+	chrome.storage.sync.set({'auto-detect': button.target.id}, function() { console.log("Saved Auto-Detect Preferences"); });
 });
 
 $("#sortable").disableSelection();
