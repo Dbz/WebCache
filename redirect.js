@@ -58,8 +58,8 @@ function handler(details) {
 }
 
 function openPage(currentTab) {
-	chrome.storage.sync.get('caches', function(result) {
-		var cacheOrder = result.caches.split(":");
+	chrome.storage.sync.get('cacheOrder', function(result) {
+		var cacheOrder = result.cacheOrder;
         
         URL_HASH.sort(function(a, b) {
         	return cacheOrder.indexOf(a.name) - cacheOrder.indexOf(b.name);
@@ -72,7 +72,7 @@ function openPage(currentTab) {
         
         console.log(cacheURL);
         
-        index = 0
+        index = 0;
         numberOfRedirects = 0;
         redirecting = true;
 				
@@ -134,9 +134,11 @@ chrome.storage.sync.get('auto-detect', function(result) {
 	}
 });
 
-chrome.browserAction.onClicked.addListener(openPage);
-
-chrome.runtime.onInstalled.addListener(function(details) {
-	if(details.reason == "install")
-		chrome.storage.set({'caches':cacheNames.join(":"), 'auto-detect':'off'}, function() { console.log("first install"); });
+chrome.runtime.onInstalled.addListener(function(details) { // fires on install or update
+    chrome.storage.sync.get("cacheOrder", function(result) {
+        if(Object.keys(result).length == 0) // no storage found
+            chrome.storage.sync.set({"cacheOrder": cacheNames, "auto-detect": "off"}); // set defaults
+    });
 });
+
+chrome.browserAction.onClicked.addListener(openPage);

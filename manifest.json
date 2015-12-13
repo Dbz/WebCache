@@ -3,7 +3,7 @@
 
 	"name": "WebCache",
 	"short_name" : "WebCache",
-  	"version": "3.5.5",
+  	"version": "3.5.6",
 	"description": "View a cached version of a web page (Google Cache, Wayback Machine, Coral CDN)",
 
 	"browser_action": {
