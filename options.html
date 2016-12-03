@@ -5,7 +5,7 @@
 	
 	<!-- bootstrap css-->
 	
-	<link rel="stylesheet" href="bootstrap.min.css" />
+	<!--<link rel="stylesheet" href="bootstrap.min.css" />-->
 	<link rel="stylesheet" href="options.css" />
 
 	<script src="jQuery/jquery-1.10.2.js"></script>
@@ -14,29 +14,69 @@
 </head>
 
 <body>
-<div class="panel panel-default row panel-info ">
-	<div class="panel-heading">
-		<h3 class="panel-title">List your preferable cache databases by dragging</h3>
-	</div>
-	<div class="panel-body col-md-5 col-md-offset-1">
-		<div id="options">
-			<ul class="list-group" id="sortable">
-				<li class="list-group-item" id="Google Cache"><a><img src="images/GoogleCacheHelvetica.png", class="button" /></a></li>
-				<li class="list-group-item" id="WayBack Machine"><a><img src="images/WaybackMachineHelvetica.png",class="button" /></a></li>
-				<li class="list-group-item" id="Coral CDN"><a><img src="images/CoralCDNHelvetica.png", class="button" /></a></li>
-			</ul>
-		</div>
-	</div>
-	<div class="panel-body col-md-5 col-md-offset-1">
-		<h4 class="panel-title">Detect down webpage</h4>
-		<br>
-		<div class="container">
-			<label class="radio-inline" for="on">On</label>
-			<input type="radio" id="on" name="optradio">
-			<label class="radio-inline" for="off">Off</label>
-			<input type="radio" id="off" name="optradio">
-		</div>
-	</div>
+<!--<div class="panel panel-default row panel-info ">-->
+	<!--<div class="panel-heading">-->
+		<!--<h3 class="panel-title">List your preferable cache databases by dragging</h3>-->
+	<!--</div>-->
+	<!--<div class="panel-body col-md-5 col-md-offset-1">-->
+		<!--<div id="options">-->
+			<!--<ul class="list-group" id="sortable">-->
+				<!--<li class="list-group-item" id="Google Cache"><a><img src="images/GoogleCacheHelvetica.png", class="button" /></a></li>-->
+				<!--<li class="list-group-item" id="WayBack Machine"><a><img src="images/WaybackMachineHelvetica.png",class="button" /></a></li>-->
+				<!--<li class="list-group-item" id="Coral CDN"><a><img src="images/CoralCDNHelvetica.png", class="button" /></a></li>-->
+			<!--</ul>-->
+		<!--</div>-->
+	<!--</div>-->
+	<!--<div class="panel-body col-md-5 col-md-offset-1">-->
+		<!--<h4 class="panel-title">Detect down web page</h4>-->
+		<!--<br>-->
+		<!--<div class="container">-->
+			<!--<label class="radio-inline" for="on">On</label>-->
+			<!--<input type="radio" id="on" name="optradio">-->
+			<!--<label class="radio-inline" for="off">Off</label>-->
+			<!--<input type="radio" id="off" name="optradio">-->
+		<!--</div>-->
+	<!--</div>-->
+	<!--&lt;!&ndash;<div class="panel-heading">&ndash;&gt;-->
+		<!--&lt;!&ndash;<h3 class="panel-title">Enabled right click menu options</h3>&ndash;&gt;-->
+	<!--&lt;!&ndash;</div>&ndash;&gt;-->
+	<!--&lt;!&ndash;<div class="panel-body col-md-5 col-md-offset-1">&ndash;&gt;-->
+		<!--&lt;!&ndash;<p>Hello</p>&ndash;&gt;-->
+	<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--</div>-->
+
+<div id="flex-group">
+  <div id="context-menu">
+    <h3 class="title">Appear in right click menu</h3>
+    <div class="input-group">
+      <span class="input-group-addon">
+        <input type="checkbox">
+      </span>
+      <img src="images/GoogleCacheHelvetica.png" />
+    </div>
+    <div class="input-group">
+      <!--<span class="input-group-addon">-->
+        <!--<input type="checkbox">-->
+      <!--</span>-->
+      <!--<img src="images/WaybackMachineHelvetica.png" />-->
+    </div>
+    <div class="input-group">
+      <!--<span class="input-group-addon">-->
+        <!--<input type="checkbox">-->
+      <!--</span>-->
+      <!--<img src="images/CoralCDNHelvetica.png" />-->
+    </div>
+  </div>
+  <div id="browser-action">
+    <div id="left">
+      <h3> List your preferable cache databases by dragging</h3>
+      <p> Left stuff </p>
+    </div>
+    <div id="right">
+      <h3> Automatically detect and activate for down web pages</h3>
+      <p> Right stuff </p>
+    </div>
+  </div>
 </div>
 <script src="options.js"></script>
 </body>
