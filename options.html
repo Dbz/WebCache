@@ -14,57 +14,46 @@
 </head>
 
 <body>
-<!--<div class="panel panel-default row panel-info ">-->
-	<!--<div class="panel-heading">-->
-		<!--<h3 class="panel-title">List your preferable cache databases by dragging</h3>-->
-	<!--</div>-->
-	<!--<div class="panel-body col-md-5 col-md-offset-1">-->
-		<!--<div id="options">-->
-			<!--<ul class="list-group" id="sortable">-->
-				<!--<li class="list-group-item" id="Google Cache"><a><img src="images/GoogleCacheHelvetica.png", class="button" /></a></li>-->
-				<!--<li class="list-group-item" id="WayBack Machine"><a><img src="images/WaybackMachineHelvetica.png",class="button" /></a></li>-->
-				<!--<li class="list-group-item" id="Coral CDN"><a><img src="images/CoralCDNHelvetica.png", class="button" /></a></li>-->
-			<!--</ul>-->
-		<!--</div>-->
-	<!--</div>-->
-	<!--<div class="panel-body col-md-5 col-md-offset-1">-->
-		<!--<h4 class="panel-title">Detect down web page</h4>-->
-		<!--<br>-->
-		<!--<div class="container">-->
-			<!--<label class="radio-inline" for="on">On</label>-->
-			<!--<input type="radio" id="on" name="optradio">-->
-			<!--<label class="radio-inline" for="off">Off</label>-->
-			<!--<input type="radio" id="off" name="optradio">-->
-		<!--</div>-->
-	<!--</div>-->
-	<!--&lt;!&ndash;<div class="panel-heading">&ndash;&gt;-->
-		<!--&lt;!&ndash;<h3 class="panel-title">Enabled right click menu options</h3>&ndash;&gt;-->
-	<!--&lt;!&ndash;</div>&ndash;&gt;-->
-	<!--&lt;!&ndash;<div class="panel-body col-md-5 col-md-offset-1">&ndash;&gt;-->
-		<!--&lt;!&ndash;<p>Hello</p>&ndash;&gt;-->
-	<!--&lt;!&ndash;</div>&ndash;&gt;-->
-<!--</div>-->
-
 <div id="flex-group">
-  <div id="context-menu">
-    <h3 class="title">Appear in right click menu</h3>
-    <div class="input-group">
-      <span class="input-group-addon">
-        <input type="checkbox">
-      </span>
-      <img src="images/GoogleCacheHelvetica.png" />
+  <h3 class="title">Webcache Options</h3>
+  <div class="settings-wrapper">
+    <div id="context-caches-wrapper">
+      <div class="context-cache">
+        <div class="checkbox-wrapper">
+          <input class='checkbox' type="checkbox">
+        </div>
+        <img src="images/GoogleCacheHelvetica.png" />
+      </div>
+
+      <div class="context-cache">
+        <div class="checkbox-wrapper">
+          <input class='checkbox' type="checkbox">
+        </div>
+        <img src="images/WaybackMachineHelvetica.png" />
+      </div>
+
+      <div class="context-cache">
+        <div class="checkbox-wrapper">
+          <input class='checkbox' type="checkbox">
+        </div>
+        <img src="images/CoralCDNHelvetica.png" />
+      </div>
     </div>
-    <div class="input-group">
-      <!--<span class="input-group-addon">-->
-        <!--<input type="checkbox">-->
-      <!--</span>-->
-      <!--<img src="images/WaybackMachineHelvetica.png" />-->
+    <div id="context-menu-definition">
+      <p> Select the checkboxes to add these caches to the right click context menu </p>
     </div>
-    <div class="input-group">
-      <!--<span class="input-group-addon">-->
-        <!--<input type="checkbox">-->
-      <!--</span>-->
-      <!--<img src="images/CoralCDNHelvetica.png" />-->
+  </div>
+  <div id="cache-order-preference" class="settings-wrapper">
+    <div>
+      <ul class="list-group" id="sortable">
+        <li class="list-group-item" id="Google Cache"><a><img src="images/GoogleCacheHelvetica.png", class="button" /></a></li>
+        <li class="list-group-item" id="WayBack Machine"><a><img src="images/WaybackMachineHelvetica.png",class="button" /></a></li>
+        <li class="list-group-item" id="Coral CDN"><a><img src="images/CoralCDNHelvetica.png", class="button" /></a></li>
+      </ul>
+    </div>
+    <div>
+      <p> Please drag these caches in preferential order. When you click the Webcache button,
+      it will cycle through these caches until finding the current webpage.</p>
     </div>
   </div>
   <div id="browser-action">
