@@ -15,9 +15,9 @@
 
 <body>
 <div id="flex-group">
-  <h3 class="title">Webcache Options</h3>
+  <h3 class="title">WebCache Options</h3>
   <div class="settings-wrapper">
-    <div id="context-caches-wrapper">
+    <div class="setting">
       <div class="context-cache">
         <div class="checkbox-wrapper">
           <input class='checkbox' type="checkbox">
@@ -39,31 +39,37 @@
         <img src="images/CoralCDNHelvetica.png" />
       </div>
     </div>
-    <div id="context-menu-definition">
+    <div class="setting-definition">
       <p> Select the checkboxes to add these caches to the right click context menu </p>
     </div>
   </div>
-  <div id="cache-order-preference" class="settings-wrapper">
-    <div>
-      <ul class="list-group" id="sortable">
-        <li class="list-group-item" id="Google Cache"><a><img src="images/GoogleCacheHelvetica.png", class="button" /></a></li>
-        <li class="list-group-item" id="WayBack Machine"><a><img src="images/WaybackMachineHelvetica.png",class="button" /></a></li>
-        <li class="list-group-item" id="Coral CDN"><a><img src="images/CoralCDNHelvetica.png", class="button" /></a></li>
+  <div class="settings-wrapper">
+    <div class="setting">
+      <ul id="sortable">
+        <li class="list-item" id="Google Cache"><a><img src="images/GoogleCacheHelvetica.png" /></a></li>
+        <li class="list-item" id="WayBack Machine"><a><img src="images/WaybackMachineHelvetica.png" /></a></li>
+        <li class="list-item" id="Coral CDN"><a><img src="images/CoralCDNHelvetica.png" /></a></li>
       </ul>
     </div>
-    <div>
-      <p> Please drag these caches in preferential order. When you click the Webcache button,
-      it will cycle through these caches until finding the current webpage.</p>
+    <div class="setting-definition">
+      <p> Drag these caches in preferential order. When you click the WebCache button,
+      it will cycle through these caches until finding the current web page.</p>
     </div>
   </div>
-  <div id="browser-action">
-    <div id="left">
-      <h3> List your preferable cache databases by dragging</h3>
-      <p> Left stuff </p>
+  <div class="settings-wrapper">
+    <div id="setting-row">
+      <span>
+        <label class="radio-inline" for="on">On</label>
+        <input type="radio" id="on" name="optradio">
+      </span>
+      <span>
+        <label class="radio-inline" for="off">Off</label>
+        <input type="radio" id="off" name="optradio">
+      </span>
     </div>
-    <div id="right">
-      <h3> Automatically detect and activate for down web pages</h3>
-      <p> Right stuff </p>
+    <div class="setting-definition">
+      <p> Would you like for WebCache to automatically detect when a web page is down and
+      load a cached copy?</p>
     </div>
   </div>
 </div>
