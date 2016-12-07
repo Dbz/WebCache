@@ -3,9 +3,6 @@
   <meta charset="utf-8">
 	<title>WebCache Options</title>
 	
-	<!-- bootstrap css-->
-	
-	<!--<link rel="stylesheet" href="bootstrap.min.css" />-->
 	<link rel="stylesheet" href="options.css" />
 
 	<script src="jQuery/jquery-1.10.2.js"></script>
@@ -46,9 +43,9 @@
   <div class="settings-wrapper">
     <div class="setting">
       <ul id="sortable">
-        <li class="list-item" id="Google Cache"><a><img src="images/GoogleCacheHelvetica.png" /></a></li>
-        <li class="list-item" id="WayBack Machine"><a><img src="images/WaybackMachineHelvetica.png" /></a></li>
-        <li class="list-item" id="Coral CDN"><a><img src="images/CoralCDNHelvetica.png" /></a></li>
+        <li class="list-item" id="Google Cache"><img src="images/GoogleCacheHelvetica.png" /></li>
+        <li class="list-item" id="WayBack Machine"><img src="images/WaybackMachineHelvetica.png" /></li>
+        <li class="list-item" id="Coral CDN"><img src="images/CoralCDNHelvetica.png" /></li>
       </ul>
     </div>
     <div class="setting-definition">
@@ -58,14 +55,14 @@
   </div>
   <div class="settings-wrapper">
     <div id="setting-row">
-      <span>
+      <div class="radio-wrapper">
         <label class="radio-inline" for="on">On</label>
         <input type="radio" id="on" name="optradio">
-      </span>
-      <span>
+      </div>
+      <div class="radio-wrapper">
         <label class="radio-inline" for="off">Off</label>
         <input type="radio" id="off" name="optradio">
-      </span>
+      </div>
     </div>
     <div class="setting-definition">
       <p> Would you like for WebCache to automatically detect when a web page is down and
