@@ -38,8 +38,11 @@ $("#sortable").sortable({
     }
 });
 
-$(":radio").click(function(button) {
-	chrome.storage.sync.set({'auto-detect': button.target.id}, function() { console.log("Saved Auto-Detect Preferences"); });
+$("#myonoffswitch").click(function(button) { // Save auto-detect settings
+  chrome.storage.sync.set({'auto-detect': button.target.id}, function() {
+    console.log("Saved Auto-Detect Preferences");
+  });
+});
 });
 
 $("#sortable").disableSelection();
