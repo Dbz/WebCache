@@ -3,10 +3,12 @@
   <meta charset="utf-8">
 	<title>WebCache Options</title>
 	
-	<link rel="stylesheet" href="options.css" />
+  <link rel="stylesheet" href="options.css" />
+  <link rel="stylesheet" href="jQuery/jquery-ui-1.12.1.custom/jquery-ui.min.css" />
 
-	<script src="jQuery/jquery-1.10.2.js"></script>
-	<script src="jQuery/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="jQuery/jquery-ui-1.12.1.custom/external/jquery/jquery.js"></script>
+  <script src="jQuery/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+
 
 </head>
 
@@ -37,9 +39,18 @@
   <div class="settings-wrapper">
     <div class="setting">
       <ul id="sortable">
-        <li class="list-item" id="Google Cache"><p>Google Cache</p></li>
-        <li class="list-item" id="Wayback Machine"><p>Wayback Machine</p></li>
-        <li class="list-item" id="Coral CDN"><p>Coral CDN</p></li>
+        <li class="list-item" id="Google Cache">
+          <p>Google Cache</p>
+          <span class="ui-icon ui-icon-grip-dotted-horizontal icon"></span>
+        </li>
+        <li class="list-item" id="Wayback Machine">
+          <p>Wayback Machine</p>
+          <span class="ui-icon ui-icon-grip-dotted-horizontal icon"></span>
+        </li>
+        <li class="list-item" id="Coral CDN">
+          <p>Coral CDN</p>
+          <span class="ui-icon ui-icon-grip-dotted-horizontal icon"></span>
+        </li>
       </ul>
     </div>
     <div class="setting-definition">
@@ -58,7 +69,7 @@
       </div>
     </div>
     <div class="setting-definition">
-      <p> Would you like for WebCache to automatically detect when a web page is down and
+      <p>DDOS Protection. Would you like for WebCache to automatically detect when a web page is down and
       load a cached copy?</p>
     </div>
   </div>
