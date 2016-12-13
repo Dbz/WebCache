@@ -1,29 +1,30 @@
 {
-	"manifest_version": 2,
+  "manifest_version": 2,
 
-	"name": "WebCache",
-	"short_name" : "WebCache",
-  	"version": "3.5.6",
-	"description": "View a cached version of a web page (Google Cache, Wayback Machine, Coral CDN)",
+  "name": "WebCache",
+  "short_name" : "WebCache",
+  "version": "3.5.6",
+  "description": "View a cached version of a web page (Google Cache, Wayback Machine, Coral CDN)",
 
-	"browser_action": {
-		"default_icon": {
-			"19":"/images/icon.png"
-		},
-		"default_title": "Cache Page"
-	},
+  "browser_action": {
+    "default_icon": {
+      "19":"/images/icon.png"
+    },
+    "default_title": "Cache Page"
+  },
 
-	"background": {
-		"scripts": [
-			"redirect.js"
-		]
-	},
-
-	"options_page": "options.html",
-
-	"permissions": [
-    	"tabs", "http://*/*", "https://*/*",
-    	"webRequest", "webRequestBlocking",
-    	"storage"
+  "background": {
+    "scripts": [
+      "redirect.js"
     ]
+  },
+
+  "options_page": "options.html",
+
+  "permissions": [
+    "tabs", "http://*/*", "https://*/*",
+    "webRequest", "webRequestBlocking",
+    "storage",
+    "contextMenus"
+  ]
 }
