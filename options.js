@@ -47,12 +47,30 @@ $('#myonoffswitch').click(function(event) { // Save auto-detect settings
 
 $('.context-menu-label').click(function(event) { // Add/Remove context menu caches
   var id = $(event.target).attr('for');
-  var checkbox = $('#' + id);
   var saveObj = {};
-  saveObj[id] = !checkbox.is(':checked');
+  saveObj[id] = !$('#' + id).is(':checked');
 
-  chrome.storage.sync.set(saveObj, function() {
-    console.log('Saved context menu preferences for ' + id);
+  chrome.storage.sync.get(id, function(results) {
+    if(saveObj[id]) { // Add context menu
+      var options = {
+        title: 'Open in ' + $("label[for='"+ id +"']").text(),
+        contexts: ['page', 'link'],
+        onclick: function(info, tab) { debugger; }
+      };
+      cid = chrome.contextMenus.create(options, function() {
+        console.log('created context menu: ' + cid);
+      });
+      saveObj[id] = cid;
+      chrome.storage.sync.set(saveObj, function() {
+        console.log('Saved context menu preferences for ' + id);
+      });
+    }
+    else { // Remove context menu
+      saveObj[id] = false;
+      chrome.storage.sync.set(saveObj, function() {
+        chrome.contextMenus.remove(results[id]);
+      });
+    }
   });
 });
 
