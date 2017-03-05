@@ -7,14 +7,17 @@
   "description": "View a cached version of a web page (Google Cache, Wayback Machine, Coral CDN)",
 
   "browser_action": {
-    "default_icon": {
-      "19":"/images/icon.png"
-    },
     "default_title": "Cache Page"
+  },
+
+  "icons": {
+    "16":"/images/icon-small.png",
+    "19":"/images/icon.png"
   },
 
   "background": {
     "scripts": [
+      "context-menu.js",
       "redirect.js"
     ]
   },
