@@ -1,5 +1,22 @@
 var order = [];
 
+// Add/Remove context menu caches
+function updateContextMenu(event) {
+  var saveObj = {};
+  var cache = $(event.target).attr('for');
+  var add_context_menu = !$('#' + cache).is(':checked');
+  var create_properties = {
+    id: cache,
+    title: 'Open page in ' + $("label[for='"+ cache +"']").text(),
+    contexts: ['page'],
+    onclick: updateUrl
+  };
+
+  add_context_menu ? chrome.contextMenus.create(create_properties) : chrome.contextMenus.remove(cache);
+
+  saveObj[cache] = add_context_menu;
+  chrome.storage.sync.set(saveObj);
+}
 $('#sortable').sortable({
     stop: function(event, ui) { // Save settings after change
       order.splice(order.indexOf(ui.item.attr('id')), 1);
@@ -45,33 +62,7 @@ $('#myonoffswitch').click(function(event) { // Save auto-detect settings
   });
 });
 
-$('.context-menu-label').click(function(event) { // Add/Remove context menu caches
-  var id = $(event.target).attr('for');
-  var saveObj = {};
-  saveObj[id] = !$('#' + id).is(':checked');
-
-  chrome.storage.sync.get(id, function(results) {
-    if(saveObj[id]) { // Add context menu
-      var options = {
-        title: 'Open in ' + $("label[for='"+ id +"']").text(),
-        contexts: ['page', 'link'],
-        onclick: function(info, tab) { debugger; }
-      };
-      cid = chrome.contextMenus.create(options, function() {
-        console.log('created context menu: ' + cid);
-      });
-      saveObj[id] = cid;
-      chrome.storage.sync.set(saveObj, function() {
-        console.log('Saved context menu preferences for ' + id);
-      });
-    }
-    else { // Remove context menu
-      saveObj[id] = false;
-      chrome.storage.sync.set(saveObj, function() {
-        chrome.contextMenus.remove(results[id]);
-      });
-    }
-  });
-});
+// Add/Remove context menu caches
+$('.context-menu-label').click(updateContextMenu);
 
 $('#sortable').disableSelection();
