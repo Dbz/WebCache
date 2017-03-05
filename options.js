@@ -1,22 +1,39 @@
-var order = [];
+const CONTEXT_MENU_CACHES = [
+  "google-cache",
+  "wayback-machine",
+  "coral-cdn"
+];
 
 // Add/Remove context menu caches
-function updateContextMenu(event) {
-  var saveObj = {};
+function updateContextMenuCaches(event) {
   var cache = $(event.target).attr('for');
   var add_context_menu = !$('#' + cache).is(':checked');
-  var create_properties = {
-    id: cache,
-    title: 'Open page in ' + $("label[for='"+ cache +"']").text(),
-    contexts: ['page'],
-    onclick: updateUrl
-  };
+  add_context_menu ? createContextMenu(cache) : removeContextMenu(cache);
+}
 
-  add_context_menu ? chrome.contextMenus.create(create_properties) : chrome.contextMenus.remove(cache);
-
-  saveObj[cache] = add_context_menu;
+// Remove context menu caches
+function removeContextMenu(cache) {
+  var saveObj = {};
+  saveObj[cache] = false;
+  chrome.contextMenus.remove(cache);
   chrome.storage.sync.set(saveObj);
 }
+
+// Create context menu caches
+function createContextMenu(cache) {
+  var saveObj = {};
+  var create_properties = {
+    id: cache,
+    title: 'Open page with ' + cache.split('-').join(' '), //$("label[for='"+ cache +"']").text()
+    contexts: ['page']
+  };
+  saveObj[cache] = true;
+
+  chrome.contextMenus.create(create_properties);
+  chrome.storage.sync.set(saveObj);
+}
+
+var order = [];
 $('#sortable').sortable({
     stop: function(event, ui) { // Save settings after change
       order.splice(order.indexOf(ui.item.attr('id')), 1);
@@ -28,7 +45,9 @@ $('#sortable').sortable({
         console.log('Saved Cache Ordering Preferences');
       });
     },
-    create: function(event, ui) { // Set up sortable, checkboxes, & toggle
+
+    // Set up sortable, checkboxes, & toggle
+    create: function(event, ui) {
       // Set up sortable
       chrome.storage.sync.get('cacheOrder4', function(result) {
         order = result['cacheOrder4'] || ['google-cache-sortable', 'wayback-machine-sortable', 'coral-cdn-sortable'];
@@ -48,21 +67,22 @@ $('#sortable').sortable({
       });
 
       // Set up context menu caches
-      chrome.storage.sync.get(['google-cache', 'wayback-machine', 'coral-cdn'], function(results) {
+      chrome.storage.sync.get(CONTEXT_MENU_CACHES, function(results) {
         Object.keys(results).forEach(function(key) {
-          $('#' + key).prop('checked', results[key]);
+          $('#' + key).prop('checked', !!results[key]);
         });
       });
     }
 });
 
-$('#myonoffswitch').click(function(event) { // Save auto-detect settings
+// Save auto-detect settings
+$('#myonoffswitch').click(function(event) {
   chrome.storage.sync.set({'auto-detect': $('#myonoffswitch').is(':checked')}, function() {
     console.log('Saved Auto-Detect Preferences');
   });
 });
 
 // Add/Remove context menu caches
-$('.context-menu-label').click(updateContextMenu);
+$('.context-menu-label').click(updateContextMenuCaches);
 
 $('#sortable').disableSelection();
