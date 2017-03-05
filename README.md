@@ -4,8 +4,8 @@ This is a chrome browser extension that allows the user to view a cached version
 This is useful if the website:
 
 1. DDOS attacked (Too much Reddit traffic)
-1. No longer exists
 1. Taken down for maintenance
+1. No longer exists
 1. Has older versions with different content
 
 Install this extension [here](https://chrome.google.com/webstore/detail/webcache/cmmlgikpahieigpcclckfmhnchdlfnjd)
@@ -13,6 +13,7 @@ Install this extension [here](https://chrome.google.com/webstore/detail/webcache
 #Feedback
 
 Please report any broken functionality or feature requests [here](https://github.com/Dbz/WebCache/issues).
+
 If you would like to rate the chrome extension, please do so [here](https://chrome.google.com/webstore/detail/webcache/cmmlgikpahieigpcclckfmhnchdlfnjd/reviews).
 
 
