@@ -6,15 +6,16 @@ var CONTEXT_MENU_CACHES = [
 
 // Remove context menu caches
 function removeContextMenu(cache) {
-  var saveObj = {};
+  var saveObj    = {};
   saveObj[cache] = false;
+
   chrome.contextMenus.remove(cache);
   chrome.storage.sync.set(saveObj);
 }
 
 // Create context menu caches
 function createContextMenu(cache) {
-  var saveObj = {};
+  var saveObj           = {};
   var create_properties = {
     id: cache,
     title: "Open page with " + cache.split("-").join(" "), //$("label[for=""+ cache +""]").text()
@@ -28,7 +29,7 @@ function createContextMenu(cache) {
 
 // Add/Remove context menu caches
 function updateContextMenuCaches(event) {
-  var cache = $(event.target).attr("for");
+  var cache            = $(event.target).attr("for");
   var add_context_menu = !$("#" + cache).is(":checked");
   add_context_menu ? createContextMenu(cache) : removeContextMenu(cache);
 }
@@ -50,10 +51,10 @@ $("#sortable").sortable({
     create: function(event, ui) {
       // Set up sortable
       chrome.storage.sync.get("cacheOrder4", function(result) {
-        order = result["cacheOrder4"] || ["google-cache-sortable", "wayback-machine-sortable", "coral-cdn-sortable"];
-
         var ul = $("#sortable");
         var li = ul.children("li").get();
+        order  = result["cacheOrder4"] || ["google-cache-sortable", "wayback-machine-sortable", "coral-cdn-sortable"];
+
         li.sort(function(a, b) {
           return order.indexOf($(a).attr("id")) - order.indexOf($(b).attr("id"));
         });
