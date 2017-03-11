@@ -26,8 +26,6 @@ I am also actively seeking to diversify our contributors and especially welcome 
 If you're interested in contributing, fork this repo and create a pull request.
 Please follow the [JavaScript Style Guide](https://github.com/airbnb/javascript).
 
-Thank you to Jason Rainbows for making all of the images
-
 ##Version
 
 v4.0.0

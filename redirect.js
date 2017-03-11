@@ -9,11 +9,15 @@ var cacheURL = [
   "http://web.archive.org/web/*/",
   ".nyud.net"
 ];
-var cacheNames = ["google-cache-sortable", "wayback-machine-sortable", "coral-cdn-sortable"];
+var cacheNames = [
+  "google-cache-sortable",
+  "wayback-machine-sortable",
+  "coral-cdn-sortable"
+];
 var URL_HASH = [
-  { name: "google-cache-sortable", URL: "http://webcache.googleusercontent.com/search?q=cache:" },
+  { name: "google-cache-sortable",    URL: "http://webcache.googleusercontent.com/search?q=cache:" },
   { name: "wayback-machine-sortable", URL: "http://web.archive.org/web/*/" },
-  { name: "coral-cdn-sortable", URL: ".nyud.net" }
+  { name: "coral-cdn-sortable",       URL: ".nyud.net" }
 ];
 
 function getURL() {
@@ -21,6 +25,7 @@ function getURL() {
   if(cacheURL[index]  == cacheURL.length) {
     index = 0;
   }
+
   if(cacheURL[index] != ".nyud.net") { // Google and Wayback Machine
     return cacheURL[index] + (isHTTPS ? currentURL.substr(8) : currentURL.substr(7));
   } else { // Coral CDN
@@ -39,15 +44,14 @@ function handler(details) {
     redirecting = false;
     return { cancel: true };
   }
+
   if(~details.statusLine.search("404")) { // Not found
     ++index;
     return { redirectUrl:getURL() };
-  }
-  else if(~details.statusLine.search("403")) { // Forbidden
+  } else if(~details.statusLine.search("403")) { // Forbidden
     ++index;
     return { redirectUrl:getURL() };
-  }
-  else { // Success
+  } else { // Success
     chrome.webRequest.onHeadersReceived.removeListener(handler);
     redirecting = false;
     return { cancel: false };
@@ -62,16 +66,16 @@ function openPage(currentTab) {
       return cacheOrder.indexOf(a.name) - cacheOrder.indexOf(b.name);
     });
     
-    for (var i = 0; i< 3; i++) {
-      cacheURL[i] = URL_HASH[i].URL;
+    for(var i = 0; i < 3; i++) {
+      cacheURL[i]   = URL_HASH[i].URL;
       cacheNames[i] = URL_HASH[i].name;
     }
     
-    console.log(cacheURL);
+    // console.log(cacheURL);
     
-    index = 0;
+    index             = 0;
     numberOfRedirects = 0;
-    redirecting = true;
+    redirecting       = true;
         
     chrome.webRequest.onHeadersReceived.addListener(
       handler,
@@ -98,7 +102,7 @@ function autoRedirect(details) {
     // Make sure it is the current tab
     var tab = null;
     tabs.forEach(function(t) {
-      if(t.url == details.url) { // What if multiple tabs open with same url?
+      if(t.url === details.url) { // What if multiple tabs open with same url?
         tab = t;
       }
     });
