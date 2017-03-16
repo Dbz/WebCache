@@ -11,8 +11,10 @@
   },
 
   "icons": {
-    "16":"/images/icon-small.png",
-    "19":"/images/icon.png"
+    "128": "/images/icon-128.png",
+    "48": "/images/icon-48.png",
+    "19":"/images/icon-19.png",
+    "16":"/images/icon-16.png"
   },
 
   "background": {
