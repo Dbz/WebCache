@@ -1,45 +1,89 @@
-var CACHES = ["WayBack Machine", "Coral CDN", "Google Cache"];
-var HTML = ["Google Cache", "WayBack Machine", "Coral CDN"];
+var CONTEXT_MENU_CACHES = [
+  "google-cache",
+  "wayback-machine",
+  "coral-cdn"
+];
+
+// Remove context menu caches
+function removeContextMenu(cache) {
+  var saveObj    = {};
+  saveObj[cache] = false;
+
+  chrome.contextMenus.remove(cache);
+  chrome.storage.sync.set(saveObj);
+}
+
+// Create context menu caches
+function createContextMenu(cache) {
+  var saveObj           = {};
+  var create_properties = {
+    id: cache,
+    title: "Open page with " + cache.split("-").join(" "), //$("label[for=""+ cache +""]").text()
+    contexts: ["page"]
+  };
+  saveObj[cache] = true;
+
+  chrome.contextMenus.create(create_properties);
+  chrome.storage.sync.set(saveObj);
+}
+
+// Add/Remove context menu caches
+function updateContextMenuCaches(event) {
+  var cache            = $(event.target).attr("for");
+  var add_context_menu = !$("#" + cache).is(":checked");
+  add_context_menu ? createContextMenu(cache) : removeContextMenu(cache);
+}
+
 var order = [];
-
-//order = CACHES;
-
 $("#sortable").sortable({
-    stop: function(event, ui) {
-    	//console.log("Old Position: " + order.indexOf(ui.item.attr('id')));
-        //console.log("New position: " + ui.item.index());
-        
-        order.splice(order.indexOf(ui.item.attr('id')), 1);
-        order.splice(ui.item.index(), 0, ui.item.attr('id'));
+    stop: function(event, ui) { // Save settings after change
+      order.splice(order.indexOf(ui.item.attr("id")), 1);
+      order.splice(ui.item.index(), 0, ui.item.attr("id"));
 
-        chrome.storage.sync.set({'cacheOrder': order}, function() {
-        	console.log("Saved Settings: " + order.split(":"));
-        });
+      var saveObj = {};
+      saveObj["cacheOrder4"] = order;
+      chrome.storage.sync.set(saveObj, function() {
+        console.log("Saved Cache Ordering Preferences");
+      });
     },
-    create: function(event, ui) { // Set up sortable and also radio buttons
-        chrome.storage.sync.get('cacheOrder', function(result) {
-        	order = result.cacheOrder;
 
-	        var ul = $('#sortable');
-	        var li = ul.children('li').get();
-    	    li.sort(function(a,b) {
-    		    return order.indexOf($(a).attr('id')) - order.indexOf($(b).attr('id'))
-		    });
-		    ul.append(li);
+    // Set up sortable, checkboxes, & toggle
+    create: function(event, ui) {
+      // Set up sortable
+      chrome.storage.sync.get("cacheOrder4", function(result) {
+        var ul = $("#sortable");
+        var li = ul.children("li").get();
+        order  = result["cacheOrder4"] || ["google-cache-sortable", "wayback-machine-sortable", "coral-cdn-sortable"];
+
+        li.sort(function(a, b) {
+          return order.indexOf($(a).attr("id")) - order.indexOf($(b).attr("id"));
         });
-        // Set up radio buttons
-        chrome.storage.sync.get('auto-detect', function(result) {
-        	if(result['auto-detect'] == 'on') {
-        		$('#on').prop('checked', true);
-        	} else {
-        		$('#off').prop('checked', true);
-        	}
+        ul.append(li);
+      });
+
+      // Set up auto-detect toggle
+      chrome.storage.sync.get("auto-detect", function(result) {
+        var toggle = $("#myonoffswitch");
+        toggle.prop("checked", result["auto-detect"]);
+      });
+
+      // Set up context menu caches
+      chrome.storage.sync.get(CONTEXT_MENU_CACHES, function(results) {
+        Object.keys(results).forEach(function(key) {
+          $("#" + key).prop("checked", !!results[key]);
         });
+      });
     }
 });
 
-$(":radio").click(function(button) {
-	chrome.storage.sync.set({'auto-detect': button.target.id}, function() { console.log("Saved Auto-Detect Preferences"); });
+// Save auto-detect settings
+$("#myonoffswitch").click(function(event) {
+  chrome.storage.sync.set({"auto-detect": $("#myonoffswitch").is(":checked")}, function() {
+    console.log("Saved Auto-Detect Preferences");
+  });
 });
+
+// Add/Remove context menu caches
+$(".context-menu-label").click(updateContextMenuCaches);
 
 $("#sortable").disableSelection();
