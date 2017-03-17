@@ -3,40 +3,76 @@
   <meta charset="utf-8">
 	<title>WebCache Options</title>
 	
-	<!-- bootstrap css-->
-	
-	<link rel="stylesheet" href="bootstrap.min.css" />
-	<link rel="stylesheet" href="options.css" />
+  <link rel="stylesheet" href="options.css" />
+  <link rel="stylesheet" href="jQuery/jquery-ui-1.12.1.custom/jquery-ui.min.css" />
 
-	<script src="jQuery/jquery-1.10.2.js"></script>
-	<script src="jQuery/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="jQuery/jquery-ui-1.12.1.custom/external/jquery/jquery.js"></script>
+  <script src="jQuery/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+
 
 </head>
 
 <body>
-<div class="panel panel-default row panel-info ">
-	<div class="panel-heading">
-		<h3 class="panel-title">List your preferable cache databases by dragging</h3>
-	</div>
-	<div class="panel-body col-md-5 col-md-offset-1">
-		<div id="options">
-			<ul class="list-group" id="sortable">
-				<li class="list-group-item" id="Google Cache"><a><img src="images/GoogleCacheHelvetica.png", class="button" /></a></li>
-				<li class="list-group-item" id="WayBack Machine"><a><img src="images/WaybackMachineHelvetica.png",class="button" /></a></li>
-				<li class="list-group-item" id="Coral CDN"><a><img src="images/CoralCDNHelvetica.png", class="button" /></a></li>
-			</ul>
-		</div>
-	</div>
-	<div class="panel-body col-md-5 col-md-offset-1">
-		<h4 class="panel-title">Detect down webpage</h4>
-		<br>
-		<div class="container">
-			<label class="radio-inline" for="on">On</label>
-			<input type="radio" id="on" name="optradio">
-			<label class="radio-inline" for="off">Off</label>
-			<input type="radio" id="off" name="optradio">
-		</div>
-	</div>
+<div id="flex-group">
+  <h3 class="title">WebCache Options</h3>
+  <div class="settings-wrapper">
+    <div class="setting">
+      <div class="context-cache">
+        <input id="google-cache" class="checkbox" type="checkbox"/>
+        <label class="context-menu-label" for="google-cache">Google Cache</label>
+      </div>
+
+      <div class="context-cache">
+        <input id="wayback-machine" class="checkbox" type="checkbox"/>
+        <label class="context-menu-label" for="wayback-machine">Wayback Machine</label>
+      </div>
+
+      <div class="context-cache">
+        <input id="coral-cdn" class="checkbox" type="checkbox"/>
+        <label class="context-menu-label" for="coral-cdn">Coral CDN</label>
+      </div>
+    </div>
+    <div class="setting-definition">
+      <p> Selected caches will appear on the right click context menu </p>
+    </div>
+  </div>
+  <div class="settings-wrapper">
+    <div class="setting">
+      <ul id="sortable">
+        <li class="list-item" id="google-cache-sortable">
+          <p>Google Cache</p>
+          <span class="ui-icon ui-icon-grip-dotted-horizontal icon"></span>
+        </li>
+        <li class="list-item" id="wayback-machine-sortable">
+          <p>Wayback Machine</p>
+          <span class="ui-icon ui-icon-grip-dotted-horizontal icon"></span>
+        </li>
+        <li class="list-item" id="coral-cdn-sortable">
+          <p>Coral CDN</p>
+          <span class="ui-icon ui-icon-grip-dotted-horizontal icon"></span>
+        </li>
+      </ul>
+    </div>
+    <div class="setting-definition">
+      <p> Drag these caches in preferential order. When you click the WebCache button,
+      it will cycle through these caches until finding the current web page.</p>
+    </div>
+  </div>
+  <div class="settings-wrapper">
+    <div id="setting-row">
+      <div class="onoffswitch">
+        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch">
+        <label class="onoffswitch-label" for="myonoffswitch">
+          <span class="onoffswitch-inner"></span>
+          <span class="onoffswitch-switch"></span>
+        </label>
+      </div>
+    </div>
+    <div class="setting-definition">
+      <p>DDOS Protection. Would you like for WebCache to automatically detect when a web page is down and
+      load a cached copy? This is still an experimental feature, and you can report issues <a href="https://github.com/Dbz/WebCache/issues">here</a></p>
+    </div>
+  </div>
 </div>
 <script src="options.js"></script>
 </body>
