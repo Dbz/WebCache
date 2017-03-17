@@ -7,7 +7,7 @@
   "description": "View a cached version of a web page (Google Cache, Wayback Machine, Coral CDN)",
 
   "browser_action": {
-    "default_title": "Cache Page"
+    "default_title": "WebCache"
   },
 
   "icons": {
