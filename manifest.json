@@ -3,9 +3,8 @@
 
   "name": "WebCache",
   "short_name" : "WebCache",
-  "version": "4.0.0",
-  "description": "View a cached version of a web page (Google Cache, Wayback Machine, Coral CDN)",
-
+  "version": "4.0.1",
+  "description": "Want to view a cached website (Google Cache, Wayback Machine, Coral CDN)? With WebCahce it only takes 1 click!",
   "browser_action": {
     "default_title": "WebCache"
   },
