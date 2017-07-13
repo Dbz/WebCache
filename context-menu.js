@@ -1,6 +1,6 @@
 var CONTEXT_HASH = {
   "google-cache":     "http://webcache.googleusercontent.com/search?q=cache:",
-  "wayback-machine":  "http://web.archive.org/web/*/",
+  "wayback-machine":  "http://web.archive.org/web/",
   "coral-cdn":        ".nyud.net"
 };
 
