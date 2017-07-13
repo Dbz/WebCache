@@ -6,7 +6,7 @@ var redirecting       = false;
 
 var cacheURL = [
   "http://webcache.googleusercontent.com/search?q=cache:",
-  "http://web.archive.org/web/*/",
+  "http://web.archive.org/web/",
   ".nyud.net"
 ];
 var cacheNames = [

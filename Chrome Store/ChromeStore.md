@@ -13,6 +13,11 @@ PLEASE REPORT ISSUES/FEATURE REQUESTS HERE: https://github.com/Dbz/WebCache/issu
 
 Change Log:
 
+V 4.1.0
+--------
+
+ - Wayback Machine URL now takes you directly to the latest snapshot of a page
+
 V 4.0.0
 --------
 
