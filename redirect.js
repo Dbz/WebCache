@@ -3,31 +3,34 @@ var isHTTPS           = true;
 var index             = 0;
 var numberOfRedirects = 0;
 var redirecting       = false;
-
-var cacheURL = [
-  "http://webcache.googleusercontent.com/search?q=cache:",
-  "http://web.archive.org/web/",
-  ".nyud.net"
-];
-var cacheNames = [
+var sortableCaches = [
   "google-cache-sortable",
   "wayback-machine-sortable",
+  "archive-is-sortable",
   "coral-cdn-sortable"
 ];
+var cacheURLs = [
+  "http://webcache.googleusercontent.com/search?q=cache:",
+  "http://web.archive.org/web/",
+  "http://archive.is/newest/",
+  ".nyud.net"
+];
+
 var URL_HASH = [
   { name: "google-cache-sortable",    URL: "http://webcache.googleusercontent.com/search?q=cache:" },
   { name: "wayback-machine-sortable", URL: "http://web.archive.org/web/*/" },
+  { name: "archive-is-sortable",      URL: "http://archive.is/newest/" },
   { name: "coral-cdn-sortable",       URL: ".nyud.net" }
 ];
 
 function getURL() {
   ++numberOfRedirects;
-  if(cacheURL[index]  == cacheURL.length) {
+  if(cacheURLs[index]  == cacheURLs.length) {
     index = 0;
   }
 
-  if(cacheURL[index] != ".nyud.net") { // Google and Wayback Machine
-    return cacheURL[index] + (isHTTPS ? currentURL.substr(8) : currentURL.substr(7));
+  if(cacheURLs[index] != ".nyud.net") { // Google, Wayback Machine, and Archive Is
+    return cacheURLs[index] + (isHTTPS ? currentURL.substr(8) : currentURL.substr(7));
   } else { // Coral CDN
     if(currentURL.slice(-1) == "/") {
       return currentURL.substring(0, currentURL.length -1) + ".nyud.net";
@@ -39,7 +42,7 @@ function getURL() {
 
 function handler(details) { 
   //console.log("StatusLine is: " + details.statusLine);
-  if(numberOfRedirects > cacheURL.length) { // There is no cache available
+  if(numberOfRedirects > cacheURLs.length) { // There is no cache available
     chrome.webRequest.onHeadersReceived.removeListener(handler);
     redirecting = false;
     return { cancel: true };
@@ -60,18 +63,16 @@ function handler(details) {
 
 function openPage(currentTab) {
   chrome.storage.sync.get("cacheOrder4", function(result) {
-    var cacheOrder = result["cacheOrder4"] || cacheNames;
+    var cacheOrder = result["cacheOrder4"] || sortableCaches;
         
     URL_HASH.sort(function(a, b) {
       return cacheOrder.indexOf(a.name) - cacheOrder.indexOf(b.name);
     });
     
-    for(var i = 0; i < 3; i++) {
-      cacheURL[i]   = URL_HASH[i].URL;
-      cacheNames[i] = URL_HASH[i].name;
+    for(var i = 0; i < cacheURLs.length; i++) {
+      cacheURLs[i]   = URL_HASH[i].URL;
+      sortableCaches[i] = URL_HASH[i].name;
     }
-    
-    // console.log(cacheURL);
     
     index             = 0;
     numberOfRedirects = 0;
@@ -139,8 +140,13 @@ chrome.runtime.onInstalled.addListener(function(details) {
   chrome.storage.sync.get("cacheOrder", function(result) {
     if(Object.keys(result).length == 0) {
       var saveObject = {
-        "cacheOrder4": cacheNames,
+        "cacheOrder4": sortableCaches,
         "auto-detect": "off"
+      };
+      chrome.storage.sync.set(saveObject);
+    } else if(result["cacheOrder"].length < cacheURLs.length) {
+      var saveObject = {
+        "cacheOrder": result["cacheOrder"].concat($(sortableCaches)).not(result["cacheOrder"]).get())
       };
       chrome.storage.sync.set(saveObject);
     }
@@ -148,3 +154,4 @@ chrome.runtime.onInstalled.addListener(function(details) {
 });
 
 chrome.browserAction.onClicked.addListener(openPage);
+
