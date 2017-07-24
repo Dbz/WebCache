@@ -1,8 +1,17 @@
 var CONTEXT_MENU_CACHES = [
   "google-cache",
   "wayback-machine",
+  "archive-is",
   "coral-cdn"
 ];
+
+var SORTABLE_CACHES = [
+  "google-cache-sortable",
+  "wayback-machine-sortable",
+  "archive-is-sortable",
+  "coral-cdn-sortable"
+];
+
 
 // Remove context menu caches
 function removeContextMenu(cache) {
@@ -30,8 +39,8 @@ function createContextMenu(cache) {
 // Add/Remove context menu caches
 function updateContextMenuCaches(event) {
   var cache            = $(event.target).attr("for");
-  var add_context_menu = !$("#" + cache).is(":checked");
-  add_context_menu ? createContextMenu(cache) : removeContextMenu(cache);
+  var addContextMenu = !$("#" + cache).is(":checked");
+  addContextMenu ? createContextMenu(cache) : removeContextMenu(cache);
 }
 
 var order = [];
@@ -53,11 +62,22 @@ $("#sortable").sortable({
       chrome.storage.sync.get("cacheOrder4", function(result) {
         var ul = $("#sortable");
         var li = ul.children("li").get();
-        order  = result["cacheOrder4"] || ["google-cache-sortable", "wayback-machine-sortable", "coral-cdn-sortable"];
+        order  = result["cacheOrder4"] || SORTABLE_CACHES
 
+        if(order.length < SORTABLE_CACHES.length) { // We have just updated, so add the new caches and then save them
+          order = order.concat($(SORTABLE_CACHES).not(order).get());
+          var saveObj = {};
+          saveObj["cacheOrder4"] = order;
+          chrome.storage.sync.set(saveObj, function() {
+            console.log("Saved Cache Ordering Preferences");
+          });
+        }
+
+        // Order the caches
         li.sort(function(a, b) {
           return order.indexOf($(a).attr("id")) - order.indexOf($(b).attr("id"));
         });
+
         ul.append(li);
       });
 
@@ -87,3 +107,4 @@ $("#myonoffswitch").click(function(event) {
 $(".context-menu-label").click(updateContextMenuCaches);
 
 $("#sortable").disableSelection();
+

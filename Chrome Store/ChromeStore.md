@@ -1,4 +1,4 @@
-This is a chrome browser extension that allows the user to view a cached version of the current webpage. Set your primary cache as Google Cache, Wayback Machine, or Coral CDN. If what you're looking for isn't found, it'll cycle through the other caches until it finds what you're looking for. There are three ways to use WebCache:
+This is a chrome browser extension that allows the user to view a cached version of the current webpage. Set your primary cache as Google Cache, Wayback Machine, Archive.is, or Coral CDN. If what you're looking for isn't found, it'll cycle through the other caches until it finds what you're looking for. There are three ways to use WebCache:
 
 1. Click the extension button to view the cached version of the web page
 
@@ -17,6 +17,8 @@ V 4.1.0
 --------
 
  - Wayback Machine URL now takes you directly to the latest snapshot of a page
+ - Added Archive.is as to the caches
+ - Code Refactoring
 
 V 4.0.0
 --------
