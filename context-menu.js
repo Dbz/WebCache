@@ -1,6 +1,7 @@
 var CONTEXT_HASH = {
   "google-cache":     "http://webcache.googleusercontent.com/search?q=cache:",
-  "wayback-machine":  "http://web.archive.org/web/*/",
+  "wayback-machine":  "http://web.archive.org/web/",
+  "archive-is":       "http://archive.is/newest/",
   "coral-cdn":        ".nyud.net"
 };
 
@@ -8,7 +9,7 @@ function formUrl(context, url) {
   var contextUrl = CONTEXT_HASH[context];
   var isHTTPS    = url.substring(0, 6) === "https:";
 
-  // Google and Wayback Machine
+  // Google, Wayback Machine, and Archive is
   if(context !== "coral-cdn") {
     return contextUrl + (isHTTPS ? url.substr(8) : url.substr(7));
   } else { // Coral CDN
