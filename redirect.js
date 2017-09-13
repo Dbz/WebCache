@@ -146,7 +146,7 @@ chrome.runtime.onInstalled.addListener(function(details) {
       chrome.storage.sync.set(saveObject);
     } else if(result["cacheOrder"].length < cacheURLs.length) {
       var saveObject = {
-        "cacheOrder": result["cacheOrder"].concat($(sortableCaches)).not(result["cacheOrder"]).get())
+        "cacheOrder": result["cacheOrder"].concat($(sortableCaches)).not(result["cacheOrder"]).get()
       };
       chrome.storage.sync.set(saveObject);
     }

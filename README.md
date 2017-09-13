@@ -10,7 +10,7 @@ This is useful if the website:
 
 Install WebCache [here](https://chrome.google.com/webstore/detail/webcache/cmmlgikpahieigpcclckfmhnchdlfnjd)
 
-_Version v4.0.1_
+_Version v4.1.1_
 
 # Feedback
 
