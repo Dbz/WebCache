@@ -13,6 +13,11 @@ PLEASE REPORT ISSUES/FEATURE REQUESTS HERE: https://github.com/Dbz/WebCache/issu
 
 Change Log:
 
+V 4.1.1
+-------
+
+ - Minor bug fix
+
 V 4.1.0
 --------
 
@@ -26,7 +31,6 @@ V 4.0.0
  - Added right click menu option to view the cached version of a web page
  - Re-wrote the HTML/CSS of the options page
  - Refactoring of the code base
-
 
 V 3.5.6
 ---------
